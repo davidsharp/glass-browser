@@ -95,8 +95,7 @@ function enableClickThrough(){
 
 }
 
-
-remote.BrowserWindow.getFocusedWindow().on('minimize',function(event){
+function disableClickThrough(){
 
     $("body").css('opacity', 0.95);
     $("#transparencyRange").val(0.95)
@@ -105,10 +104,14 @@ remote.BrowserWindow.getFocusedWindow().on('minimize',function(event){
     $(".window-chrome").slideDown(200, function(){
         $(".app-controls").slideDown(200);
     });
-    // remote.BrowserWindow.getAllWindows().setIgnoreMouseEvents(false);
+
+    remote.BrowserWindow.getAllWindows().forEach(w=>w.setIgnoreMouseEvents(false));
 
     console.log("Clickthrough disabled");
-});
+}
+
+
+remote.BrowserWindow.getFocusedWindow().on('minimize',disableClickThrough);
 
 
 // Window Controls
