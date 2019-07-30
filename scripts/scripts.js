@@ -89,7 +89,7 @@ function loadURL(){
         loadPage(url);
 
     }else{
-        url = "http://" + url;
+        url = "https://" + url;
         loadPage(url);
     }
 }
