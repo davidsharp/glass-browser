@@ -136,8 +136,8 @@ function enableClickThrough(){
 
 function disableClickThrough(){
 
-    $("body").css('opacity', 0.95);
-    $("#transparencyRange").val(0.95)
+    //$("body").css('opacity', 0.95);
+    //$("#transparencyRange").val(0.95)
 
     $("#browserView").removeClass("full-size");
     $(".window-chrome").slideDown(200, function(){
