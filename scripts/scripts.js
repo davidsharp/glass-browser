@@ -4,6 +4,44 @@ const { remote } = require('electron');
 const { Menu, BrowserWindow, MenuItem, shell } = remote;
 const fs = require("fs");
 
+function setMenu(isClickThroughEnabled){
+if(process.platform.match(/darwin/)){
+  const template = [
+    {
+      label: 'Glass',
+      submenu: [
+        isClickThroughEnabled?{
+          label: 'Disable Click Through',
+          click: disableClickThrough
+        }:{
+          label: 'Enable Click Through',
+          click: enableClickThrough
+        }
+      ]
+    },
+    {role: "editMenu"},
+    {role: "viewMenu"},
+    {role: "windowMenu"},
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: 'Learn More',
+          click: async () => {
+            const { shell } = require('electron')
+            await shell.openExternal('https://github.com/mitchas/glass-browser')
+          }
+        }
+      ]
+    }
+  ]
+
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+}
+}
+
+setMenu(false)
 
 
 $(document).ready(function () {
@@ -93,6 +131,7 @@ function enableClickThrough(){
         $(".window-chrome").slideUp(200);
     });
 
+    setMenu(true);
 }
 
 function disableClickThrough(){
@@ -108,6 +147,8 @@ function disableClickThrough(){
     remote.BrowserWindow.getAllWindows().forEach(w=>w.setIgnoreMouseEvents(false));
 
     console.log("Clickthrough disabled");
+
+    setMenu(false);
 }
 
 
